@@ -7,6 +7,12 @@ var user = {
       cb(res);
     });
   },
+  selectOne: function(condition, cb) {
+    // console.log("The selectOne method just fired on the user object for condition: " + condition);
+    orm.selectOne("users", condition, function(res) {
+      cb(res);
+    });
+  },
   // The variables cols and vals are arrays.
   insertOne: function(cols, vals, cb) {
     orm.insertOne("users", cols, vals, function(res) {
@@ -15,6 +21,11 @@ var user = {
   },
   updateOne: function(objColVals, condition, cb) {
     orm.updateOne("users", objColVals, condition, function(res) {
+      cb(res);
+    });
+  },
+  deleteOne: function(condition, cb) {
+    orm.deleteOne("users", condition, function(res) {
       cb(res);
     });
   }

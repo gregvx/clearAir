@@ -19,13 +19,13 @@ var location = {
       cb(res);
     });
   },
-  updateOne: function(table, objColVals, condition, cb) {
-    orm.updateOne(table, objColVals, condition, function(res) {
+  updateOne: function(objColVals, condition, cb) {
+    orm.updateOne("locations", objColVals, condition, function(res) {
       cb(res);
     });
   },
-  deleteOne: function(table, condition, cb) {
-    orm.deleteOne(table, condition, function(res) {
+  deleteOne: function(condition, cb) {
+    orm.deleteOne("locations", condition, function(res) {
       cb(res);
     });
   }

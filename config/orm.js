@@ -72,6 +72,11 @@ var orm = {
     });
   },
   insertOne: function (table, cols, vals, cb) {
+    console.log("The ORM insertOne method is now being called. Creating a query string...");
+    console.log("the table param is: " + table);
+    console.log("the cols param is: " + cols);
+    console.log("the vals param is: " + vals);
+
     var queryString = "INSERT INTO " + table;
 
     queryString += " (";
@@ -134,10 +139,6 @@ var orm = {
   }
 
 };
-
-
-
-// 4. Export the ORM object in `module.exports`.
 
 // Export the orm object for the model 
 module.exports = orm;

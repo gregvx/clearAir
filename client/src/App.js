@@ -25,7 +25,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LocationsView from "./pages/LocationsView";
 import LocationEdit from "./pages/LocationEdit";
-// import Users from "./pages/Users";
+import UsersView from "./pages/UsersView";
 // import UserDetail from "./pages/UserDetail";
 // import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
@@ -39,8 +39,8 @@ function App() {
           <Route exact path="/" component={LocationsView} />
           <Route exact path="/locations" component={LocationsView} />
           <Route exact path="/locations/:id" component={LocationEdit} />
-          {/* <Route exact path="/users" component={Users} /> */}
-          {/* <Route exact path="/users/:id" component={UserDetail} /> */}
+          <Route exact path="/users" component={UsersView} />
+          {/* <Route exact path="/users/:id" component={UserEdit} /> */}
           {/* <Route component={NoMatch} /> */}
         </Switch>
       </div>
