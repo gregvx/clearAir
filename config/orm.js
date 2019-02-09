@@ -76,7 +76,12 @@ var orm = {
     console.log("the table param is: " + table);
     console.log("the cols param is: " + cols);
     console.log("the vals param is: " + vals);
-
+    for (var i=0; i<vals.length; i++) {
+      if (vals[i] == null || vals[i] == "" || vals[i] == "null")
+      {
+        vals[i] = null;
+      }
+    }
     var queryString = "INSERT INTO " + table;
 
     queryString += " (";

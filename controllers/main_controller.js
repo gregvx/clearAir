@@ -119,9 +119,9 @@ router.post("/api/users", function(req, res) {
   var unencryptedPass = req.body.password;
   var salt = "1234";
   var hash = "5678";
-  // console.log("Route for users put/create just fired.");
+  console.log("Route for users put/create just fired.");
   user.insertOne(["email", "first_name", "last_name", "password_hash", "salt", "home_id", "work_id", "school_id"], 
-        [req.body.email, req.body.first_name, req.body.last_name, hash, salt, 1, null, 1], function(result) {
+        [req.body.email, req.body.first_name, req.body.last_name, hash, salt, req.body.home_id, req.body.work_id, req.body.school_id], function(result) {
     // Send back the ID of the new quote
     res.json({ id: result.insertId });
   });

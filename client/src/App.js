@@ -23,11 +23,14 @@ import "./App.css";
 
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import HomeView from "./pages/HomeView";
 import LocationsView from "./pages/LocationsView";
 import LocationEdit from "./pages/LocationEdit";
 import UsersView from "./pages/UsersView";
-// import UserDetail from "./pages/UserDetail";
-// import NoMatch from "./pages/NoMatch";
+import UserEdit from "./pages/UserEdit";
+import UserLogin from "./pages/UserLogin";
+import UserRegister from "./pages/UserRegister";
+import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
 function App() {
@@ -36,12 +39,14 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path="/" component={LocationsView} />
+          <Route exact path="/" component={HomeView} />
           <Route exact path="/locations" component={LocationsView} />
           <Route exact path="/locations/:id" component={LocationEdit} />
           <Route exact path="/users" component={UsersView} />
-          {/* <Route exact path="/users/:id" component={UserEdit} /> */}
-          {/* <Route component={NoMatch} /> */}
+          <Route exact path="/users/:id" component={UserEdit} />
+          <Route exact path="/userRegister" component={UserRegister} />
+          <Route exact path="/userLogin" component={UserLogin} />
+          <Route component={NoMatch} />
         </Switch>
       </div>
     </Router>

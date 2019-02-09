@@ -10,6 +10,22 @@ export function Input(props) {
   );
 }
 
+
+export function Select(props) {
+  return (
+    <div className="form-group">
+      <label htmlFor={props.id}>{props.label}</label>
+      <select className="form-control" id={props.id} name={props.name} onChange={props.onChange}>
+      <option value="null">N/A</option>
+      {props.options.map(location => (
+        <option key={location.id} value={location.id}>{location.location_name}</option>
+      ))}
+      </select>
+
+    </div>
+  );
+}
+
 export function TextArea(props) {
   return (
     <div className="form-group">

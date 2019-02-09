@@ -5,14 +5,12 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, Select, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
-class UsersView extends Component {
+class UserLogin extends Component {
   state = {
     //this holds a list of current users
     users: [],
-    //this holds a list of current locations. Needed to populate dropdown menus.
-    locations: [],
     //this holds the data for a new user to create
     email: "",
     first_name: "",
@@ -25,30 +23,36 @@ class UsersView extends Component {
 
   componentDidMount() {
     this.loadUsers();
-    this.loadLocations();
   }
 
   loadUsers = () => {
-    // console.log("Need to do an API call from UserView...");
+    console.log("Need to do an API call from UserView...");
     API.getUsers()
       .then(res => {
-        // console.log("the API call should be done. now use the returned json to set the state.");
-        // console.log("At this point, the res.data has " + res.data.users.length + " number of users.");
+        console.log("the API call should be done. now use the returned json to set the state.");
+        console.log("At this point, the res.data has " + res.data.users.length + " number of users.");
         this.setState({ users: res.data.users });
       })
       .catch(err => console.log(err));
   };
 
-  loadLocations = () => {
-    // console.log("Need to do an API call from UserView for locations...");
-    API.getLocations()
-      .then(res => {
-        // console.log("the API call should be done. now use the returned json to set the state.");
-        // console.log("At this point, the res.data has " + res.data.locations.length + " number of locations.");
-        this.setState({ locations: res.data.locations });
-      })
-      .catch(err => console.log(err));
-  };
+  // loadUsers = () => {
+  //   API.getUsers()
+  //     .then(res => {
+  //       var that = this;
+  //       function step1 (step2) {
+  //         //define code to do first:
+  //         that.setState({ users: res.data, user_name: "" });
+  //         step2();
+  //       };
+  //       function step2() {
+  //         //define second line of code:
+  //         console.log("The backend just sent back users. The state is now set. Number of users was: " + that.state.users.length);
+  //       };
+  //       step1(step2);
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   deleteUser = id => {
     API.deleteUser(id)
@@ -58,11 +62,18 @@ class UsersView extends Component {
 
   handleInputChange = event => {
     const { name, value } = event.target;
-    console.log("you changed a field. the field " + name + " was changed to " + value);
     this.setState({
       [name]: value
     });
   };
+
+  // email: "",
+  // first_name: "",
+  // last_name: "",
+  // home_id: null,
+  // work_id: null,
+  // school_id: null,
+  // password: ""
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -127,27 +138,12 @@ class UsersView extends Component {
                 name="last_name"
                 placeholder="Last Name"
               />
-              <Select
-                id="home_id_select"
-                label="your home location"
-                options={this.state.locations}
+              {/* <Input
+                value={this.state.last_name}
                 onChange={this.handleInputChange}
-                name="home_id"
-              />
-              <Select
-                id="work_id_select"
-                label="your work location"
-                options={this.state.locations}
-                onChange={this.handleInputChange}
-                name="work_id"
-              />
-              <Select
-                id="school_id_select"
-                label="your school location"
-                options={this.state.locations}
-                onChange={this.handleInputChange}
-                name="school_id"
-              />
+                name="last_name"
+                placeholder="Last Name"
+              /> */}
               <Input
                 value={this.state.password}
                 onChange={this.handleInputChange}
@@ -168,4 +164,4 @@ class UsersView extends Component {
   }
 }
 
-export default UsersView;
+export default UserLogin;
