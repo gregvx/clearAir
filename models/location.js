@@ -7,6 +7,12 @@ var location = {
       cb(res);
     });
   },
+  selectOne: function(condition, cb) {
+    // console.log("The selectOne method just fired on the location object for condition: " + condition);
+    orm.selectOne("locations", condition, function(res) {
+      cb(res);
+    });
+  },
   // The variables cols and vals are arrays.
   insertOne: function(cols, vals, cb) {
     orm.insertOne("locations", cols, vals, function(res) {

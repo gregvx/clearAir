@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import DeleteBtn from "../components/DeleteBtn";
-import Jumbotron from "../components/Jumbotron";
+// import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
-class Locations extends Component {
+class LocationsView extends Component {
   state = {
     locations: [],
     location_name: ""
@@ -21,11 +21,31 @@ class Locations extends Component {
 
   loadLocations = () => {
     API.getLocations()
-      .then(res =>
-        this.setState({ location: res.data, location_name: "" })
-      )
+      .then(res => {
+        // console.log("the API call should be done. now use the returned json to set the state.");
+        // console.log("At this point, the res.data has locations of: " + res.data.locations.length);
+        this.setState({ locations: res.data.locations, location_name: "" });
+      })
       .catch(err => console.log(err));
   };
+
+  // loadLocations = () => {
+  //   API.getLocations()
+  //     .then(res => {
+  //       var that = this;
+  //       function step1 (step2) {
+  //         //define code to do first:
+  //         that.setState({ locations: res.data, location_name: "" });
+  //         step2();
+  //       };
+  //       function step2() {
+  //         //define second line of code:
+  //         console.log("The backend just sent back locations. The state is now set. Number of locations was: " + that.state.locations.length);
+  //       };
+  //       step1(step2);
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   deleteLocation = id => {
     API.deleteLocation(id)
@@ -43,7 +63,7 @@ class Locations extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     // if (this.state.title && this.state.author) {
-      if (this.state.location_name) {
+    if (this.state.location_name) {
       API.saveLocation({
         // title: this.state.title,
         // author: this.state.author,
@@ -55,13 +75,31 @@ class Locations extends Component {
   };
 
   render() {
+    // console.log("The render method just got fired. At this point, the state has locations of: " + this.state.locations.length);
     return (
       <Container fluid>
         <Row>
+        <Col size="md-6 sm-12">
+              <h1>Existing Locations:</h1>
+            {this.state.locations.length ? (
+              <List>
+                {this.state.locations.map(location => (
+                  <ListItem key={location.id}>
+                    <Link to={"/locations/" + location.id}>
+                      <strong>
+                        {location.location_name}
+                      </strong>
+                    </Link>
+                    <DeleteBtn onClick={() => this.deleteLocation(location.id)} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+                <h3>No Results to Display</h3>
+              )}
+          </Col>
           <Col size="md-6">
-            <Jumbotron>
-              <h1>What Locations Should I Read?</h1>
-            </Jumbotron>
+            <h1>Location to add:</h1>
             <form>
               <Input
                 value={this.state.location_name}
@@ -86,30 +124,9 @@ class Locations extends Component {
                 disabled={!(this.state.location_name)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Locations
+                Submit Location
               </FormBtn>
             </form>
-          </Col>
-          <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Locations On My List</h1>
-            </Jumbotron>
-            {/* {this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )} */}
           </Col>
         </Row>
       </Container>
@@ -117,4 +134,4 @@ class Locations extends Component {
   }
 }
 
-export default Locations;
+export default LocationsView;

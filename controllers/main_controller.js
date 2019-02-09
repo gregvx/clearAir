@@ -7,7 +7,7 @@ var location = require("../models/location.js");
 
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  console.log("custom route for root just fired.");
+  // console.log("custom route for root just fired.");
   location.selectAll(function(data) {
     var locationsArray = {
       locations: data
@@ -38,13 +38,20 @@ router.post("/api/locations", function(req, res) {
   });
 });
 
-
+//get a single location for review
+router.get("/api/locations/:id", function(req, res) {
+  console.log("custom route for a single location get method just fired.");
+  var condition = "id = " + req.params.id;
+  location.selectOne(condition, function(data) {
+    res.json(data);
+  });
+});
 
 //edit a location
 router.put("/api/locations/:id", function(req, res) {
-  // console.log("in the controller method for editing a location with the id of: " + req.params.id);
+  console.log("in the controller method for editing a location with the id of: " + req.params.id);
   var condition = "id = " + req.params.id;
-  // console.log("condition", condition);
+  console.log("condition", condition);
   location.updateOne(
     "locations",
     {
@@ -70,7 +77,9 @@ router.delete("/api/locations/:id", function(req, res) {
     "locations",
     condition,
     function(result) {
-      if (result.changedRows === 0) {
+      console.log("Just attempted to delete a row in the DB. affectedRows is: " + result.affectedRows);
+      // return res.json(result);
+      if (result.affectedRows === 0) {
         // If no rows were changed, then the ID must not exist, so 404
         return res.status(404).end();
       }

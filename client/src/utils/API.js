@@ -17,6 +17,11 @@ export default {
   saveLocation: function(locationData) {
     return axios.post("/api/locations", locationData);
   },
+   // Edits a location in the database
+   editLocation: function(id, locationData) {
+     console.log("The api method editLocation just got called. The id param is: " + id + " and the locationData param is: " + locationData.location_name);
+    return axios.put("/api/locations/" + id, locationData);
+  },
 
   // Gets all users
   getUsers: function() {
