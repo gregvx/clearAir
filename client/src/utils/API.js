@@ -42,7 +42,14 @@ export default {
   },
    // Edits a user in the database
    editUser: function (id, userData) {
-    console.log("The api method editUser just got called. The id param is: " + id + " and the userData param is: " + userData);
+    // console.log("The api method editUser just got called. The id param is: " + id + " and the userData param is: " + userData);
     return axios.put("/api/users/" + id, userData);
+  },
+
+  //scrape the DEQ website
+  getDeqData: function(address) {
+    console.log("The api method getDeqData just got called with the param: " + address.href);
+    return axios.put("/api/scrape",  address);
   }
+
 };

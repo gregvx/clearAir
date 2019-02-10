@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+var axios = require("axios");
+var cheerio = require("cheerio");
 
 // Import the model (user.js) to use its database functions.
 var user = require("../models/user.js");
@@ -183,6 +185,46 @@ router.delete("/api/users/:id", function(req, res) {
 });
 
 // --------------------------End Users--------------------
+
+
+
+// ------------------------Start Scraper-----------------
+
+// A GET route for scraping the DEQ website
+router.put("/api/scrape", function (req, res) {
+  // First, we grab the body of the html with axios
+  // console.log("the request body is: ");
+  // console.log(req.body);
+  // console.log("The main controller method is now working on the scrape. We will use " + req.body.href);
+  axios.get(req.body.href).then(function (response) {
+    // console.log("The scrape should be complete and the response is now ready to be parsed.");
+    // Then, we load that into cheerio and save it to $ for a shorthand selector
+    var $ = cheerio.load(response.data);
+    var days = [];
+    // Now, we grab every day div within a threeDayForecast div, and do the following:
+    $(".day").each(function (i, element) {
+      // Save an empty result object
+      var result = {};
+      // console.log("We should have an empty result opject here: " + result + " and we should have a day element selectded here: " + this);
+      // Add the text and href of every link, and save them as properties of the result object
+      result.day = $(this)
+        .children("h2")
+        .text();
+      result.quality = $(this)
+        .children("a").children(".healthForecast")
+        .text();
+      days.push(result);
+      
+    });
+    // Send a message to the client
+    // res.send("Scrape Complete");
+    res.json(days);
+    // res.json(result);
+  });
+});
+
+
+// ------------------------End Scraper--------------------
 
 // Export routes for server.js to use.
 module.exports = router;
