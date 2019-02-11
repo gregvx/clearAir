@@ -3,10 +3,12 @@ import React, { Component } from "react";
 import API from "../utils/API";
 // import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { Input, FormBtn } from "../components/Form";
+import { Input, Select, FormBtn } from "../components/Form";
 
 class UsersView extends Component {
   state = {
+    //this holds a list of current locations. Needed to populate dropdown menus.
+    locations: [],
     //this holds the data for a new user to create
     email: "",
     first_name: "",
@@ -18,9 +20,19 @@ class UsersView extends Component {
   };
 
   componentDidMount() {
-
+    this.loadLocations();
   }
 
+  loadLocations = () => {
+    // console.log("Need to do an API call from UserView for locations...");
+    API.getLocations()
+      .then(res => {
+        // console.log("the API call should be done. now use the returned json to set the state.");
+        // console.log("At this point, the res.data has " + res.data.locations.length + " number of locations.");
+        this.setState({ locations: res.data.locations });
+      })
+      .catch(err => console.log(err));
+  };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -52,7 +64,7 @@ class UsersView extends Component {
       <Container fluid>
         <Row>
           <Col size="md-6">
-            <h1>User to add:</h1>
+            <h1>Register Here:</h1>
             <form>
               <Input
                 value={this.state.email}
@@ -72,12 +84,27 @@ class UsersView extends Component {
                 name="last_name"
                 placeholder="Last Name"
               />
-              {/* <Input
-                value={this.state.last_name}
+              <Select
+                id="home_id_select"
+                label="your home location"
+                options={this.state.locations}
                 onChange={this.handleInputChange}
-                name="last_name"
-                placeholder="Last Name"
-              /> */}
+                name="home_id"
+              />
+              <Select
+                id="work_id_select"
+                label="your work location"
+                options={this.state.locations}
+                onChange={this.handleInputChange}
+                name="work_id"
+              />
+              <Select
+                id="school_id_select"
+                label="your school location"
+                options={this.state.locations}
+                onChange={this.handleInputChange}
+                name="school_id"
+              />
               <Input
                 value={this.state.password}
                 onChange={this.handleInputChange}

@@ -138,6 +138,16 @@ router.get("/api/users/:id", function(req, res) {
   });
 });
 
+//check login credentials and return a single user
+router.post("/api/userLogin/", function(req, res) {
+  // console.log("custom route for user login method just fired.");
+  user.login(req.body, function(data) {
+    console.log("the main controller just got a response from the api call and it is");
+    console.log(data);
+    res.json(data);
+  });
+});
+
 // edit a user
 router.put("/api/users/:id", function(req, res) {
   console.log("in the controller method for editing a user with the id of: " + req.params.id);

@@ -31,6 +31,12 @@ export default {
   getUser: function (id) {
     return axios.get("/api/users/" + id);
   },
+  // Checks if login credentials are good
+  checkUser: function (userCreds) {
+    // console.log("The api method just got called. Passed in were the parms: ");
+    // console.log(userCreds);
+    return axios.post("/api/userLogin", userCreds);
+  },
   // Deletes the user with the given id
   deleteUser: function (id) {
     return axios.delete("/api/users/" + id);
@@ -48,7 +54,7 @@ export default {
 
   //scrape the DEQ website
   getDeqData: function(address) {
-    console.log("The api method getDeqData just got called with the param: " + address.href);
+    // console.log("The api method getDeqData just got called with the param: " + address.href);
     return axios.put("/api/scrape",  address);
   }
 

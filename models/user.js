@@ -13,6 +13,15 @@ var user = {
       cb(res);
     });
   },
+  login: function(creds, cb) {
+    // console.log("The login method just fired on the user object for creds: ");
+    // console.log(creds);
+    orm.credentialCheck("users", creds, function(res) {
+      // console.log("the user model just got a result back from the ORM. It is: ");
+      // console.log(res);
+      cb(res);
+    });
+  },
   // The variables cols and vals are arrays.
   insertOne: function(cols, vals, cb) {
     orm.insertOne("users", cols, vals, function(res) {
