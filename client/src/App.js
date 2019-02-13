@@ -26,6 +26,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeView from "./pages/HomeView";
 import LocationsView from "./pages/LocationsView";
 import LocationEdit from "./pages/LocationEdit";
+import ActivitiesView from "./pages/ActivitiesView";
+import ActivityEdit from "./pages/ActivityEdit";
 import UsersView from "./pages/UsersView";
 import UserEdit from "./pages/UserEdit";
 import UserLogin from "./pages/UserLogin";
@@ -42,6 +44,8 @@ function App() {
           <Route exact path="/" component={HomeView} />
           <Route exact path="/locations" component={LocationsView} />
           <Route exact path="/locations/:id" component={LocationEdit} />
+          <Route exact path="/activities" component={ActivitiesView} />
+          <Route exact path="/activities/:id" component={ActivityEdit} />
           <Route exact path="/users" component={UsersView} />
           <Route exact path="/users/:id" component={UserEdit} />
           <Route exact path="/userRegister" component={UserRegister} />

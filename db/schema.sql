@@ -9,6 +9,8 @@ CREATE TABLE locations
     location_name varchar(40)
 );
 
+
+
 CREATE TABLE users
 (
 	id int NOT NULL auto_increment,
@@ -28,4 +30,32 @@ CREATE TABLE users
     FOREIGN KEY (home_id) REFERENCES locations (id),
     FOREIGN KEY (work_id) REFERENCES locations (id),
     FOREIGN KEY (school_id) REFERENCES locations (id)
+);
+
+
+CREATE TABLE activities
+(
+	id int NOT NULL auto_increment,
+    act_name varchar(50),
+    act_desc varchar(1000),
+    act_href varchar(150),
+    act_img_href varchar(150),
+    jan_avail boolean not null default 0,
+    feb_avail boolean not null default 0,
+    mar_avail boolean not null default 0,
+    apr_avail boolean not null default 0,
+    may_avail boolean not null default 0,
+    jun_avail boolean not null default 0,
+    jul_avail boolean not null default 0,
+    aug_avail boolean not null default 0,
+    sep_avail boolean not null default 0,
+    oct_avail boolean not null default 0,
+    nov_avail boolean not null default 0,
+    dec_avail boolean not null default 0,
+    latitude DECIMAL(7,4),
+    longitude DECIMAL(7,4),
+    smog_county int(5),
+    PRIMARY KEY (id),
+    KEY (smog_county),
+    FOREIGN KEY (smog_county) REFERENCES locations (id)
 );

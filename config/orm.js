@@ -72,12 +72,13 @@ var orm = {
     });
   },
   insertOne: function (table, cols, vals, cb) {
-    console.log("The ORM insertOne method is now being called. Creating a query string...");
-    console.log("the table param is: " + table);
-    console.log("the cols param is: " + cols);
-    console.log("the vals param is: " + vals);
+    // console.log("The ORM insertOne method is now being called. Creating a query string...");
+    // console.log("the table param is: " + table);
+    // console.log("the cols param is: " + cols);
+    // console.log("the vals param is: " + vals);
+    // console.log("\n")
     for (var i=0; i<vals.length; i++) {
-      if (vals[i] == null || vals[i] == "" || vals[i] == "null")
+      if (vals[i] === null || vals[i] === "" || vals[i] === "null")
       {
         vals[i] = null;
       }
@@ -91,7 +92,8 @@ var orm = {
     queryString += printQuestionMarks(vals.length);
     queryString += ") ";
 
-    console.log(queryString);
+    // console.log(queryString);
+    // console.log("\n");
 
     connection.query(queryString, vals, function (err, result) {
       if (err) {
@@ -101,6 +103,53 @@ var orm = {
       cb(result);
     });
   },
+  // An example of condition would be "id = 2"
+  updateOne2: function (table, cols, vals, condition, cb) {
+    console.log("The ORM updateOne2 method is now being called. Creating a query string...");
+    console.log("the table param is: " + table);
+    console.log("the cols param is: " + cols);
+    console.log("the vals param is: " + vals);
+    console.log("the condition param is: " + condition);
+    var id = [1];
+    id[0] = condition.replace('id = ','');
+    console.log("the id param is: " + id);
+    for (var i=0; i<vals.length; i++) {
+      if (vals[i] === null || vals[i] === "" || vals[i] === "null")
+      {
+        vals[i] = null;
+      }
+    }
+    var fullVals = id.concat(vals);
+    console.log("the fullVals param is: " + fullVals);
+    console.log("\n")
+
+    var queryString = "INSERT INTO " + table;
+    queryString += " (id, ";
+    queryString += cols.toString();
+    queryString += ") VALUES (";
+    queryString += printQuestionMarks(fullVals.length);
+    queryString += ") ON DUPLICATE KEY UPDATE ";
+    var updateString = "";
+    for (var i=0; i<(cols.length - 1); i++) {
+      updateString += cols[i] + " = VALUES(" + cols[i] + "),"
+    }
+    var finalIndex = cols.length - 1;
+    updateString += cols[finalIndex] + " = VALUES(" + cols[finalIndex] + ")" //note no "," at end
+    queryString += updateString;
+
+    console.log("So, the final query string is:");
+    console.log(queryString);
+    console.log("\n");
+
+    connection.query(queryString, fullVals, function (err, result) {
+      if (err) {
+        throw err;
+      }
+      console.log("ORM's updateOne2 method just finished. It has a result of: ");
+      console.log(result);
+      cb(result);
+    });
+},
   // An example of objColVals would be {devoured:true}
   // An example of condition would be "id = 2"
   updateOne: function (table, objColVals, condition, cb) {
@@ -120,7 +169,8 @@ var orm = {
       if (err) {
         throw err;
       }
-
+      console.log("ORM's updateOne method just finished. It has a result of: ");
+      console.log(result);
       cb(result);
     });
   },

@@ -1,0 +1,19 @@
+input, label, .checkbox {
+  display: inline-block;
+  /* background-color: blue; */
+}
+
+.checkbox {
+  width: auto;
+  padding-top: 8px;
+}
+
+input[type=checkbox] {
+  padding-top: 10px;
+}
+
+/* .checkbox-label {
+  margin-top: -10px;
+  padding-top: -10px;
+  padding-bottom: 20px;
+} */

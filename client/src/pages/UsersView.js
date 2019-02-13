@@ -58,7 +58,7 @@ class UsersView extends Component {
 
   handleInputChange = event => {
     const { name, value } = event.target;
-    console.log("you changed a field. the field " + name + " was changed to " + value);
+    // console.log("you changed a field. the field " + name + " was changed to " + value);
     this.setState({
       [name]: value
     });

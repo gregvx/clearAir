@@ -23,6 +23,35 @@ export default {
     return axios.put("/api/locations/" + id, locationData);
   },
 
+  // Gets all activities
+  getActivities: function () {
+    return axios.get("/api/activities");
+  },
+  // Gets the activity with the given id
+  getActivity: function (id) {
+    return axios.get("/api/activities/" + id);
+  },
+  // Deletes the activity with the given id
+  deleteActivity: function (id) {
+    return axios.delete("/api/activities/" + id);
+  },
+  // Saves an activity to the database
+  saveActivity: function (activityData) {
+    // console.log("Api save activity method just got called. The data from the view was:");
+    // console.log(activityData);
+    return axios.post("/api/activity", activityData);
+  },
+  // Edits an activity in the database
+  editActivity: function (id, activityData) {
+    // console.log("The api method editActivity just got called. The id param is: " + id + ");
+    return axios.put("/api/activities/" + id, activityData);
+  },
+   // Edits an activity in the database
+   editActivity2: function (id, activityData) {
+    console.log("The api method editActivity2 just got called. The id param is: " + id);
+    return axios.put("/api/activities2/" + id, activityData);
+  },
+
   // Gets all users
   getUsers: function () {
     return axios.get("/api/users");
