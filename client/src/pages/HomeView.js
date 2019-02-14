@@ -14,6 +14,9 @@ class HomeView extends Component {
   state = {
     //this holds a list of current activities
     activities: [],
+    //store the time here that the user loaded this data
+    current_date: 1,
+    current_month: 1,
     //here are wasatch front county forcast stuff
     slc_name: "Salt Lake Valley",
     slc_href: "https://air.utah.gov/forecast.php?id=slc",
@@ -32,6 +35,7 @@ class HomeView extends Component {
     cache_forecast: []
   };
   componentDidMount() {
+    this.loadDate();
     this.loadDeqData();
     this.loadActivities();
   }
@@ -95,11 +99,25 @@ class HomeView extends Component {
 
   loadActivities = () => {
     // console.log("Need to do an API call from ActivitiesView...");
+    var month = this.state.current_month;
     API.getActivities()
       .then(res => {
         // console.log("the API call should be done. now use the returned json to set the state.");
         // console.log("At this point, the res.data has " + res.data.activities.length + " number of activities.");
         this.setState({ activities: res.data.activities });
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadDate = () => {
+    // console.log("Need to do an API call from HomeView for a date...");
+    API.getDate()
+      .then(res => {
+        console.log("the API call should be done. now use the returned json to set the state.");
+        console.log("At this point, the res.data is");
+        console.log(res.data);
+        this.setState({ current_date: res.data.fullDate });
+        this.setState({ current_month: res.data.justMonth });
       })
       .catch(err => console.log(err));
   };
@@ -120,6 +138,8 @@ class HomeView extends Component {
               <h1>ClearAir</h1>
               <hr></hr>
               <h3>Outdoor Recreation Ideas on the Wasatch Front Where the Air is Clean, Now.</h3>
+              <hr></hr>
+              <h3>{this.state.current_date}</h3>
             </Jumbotron>
           </ColStandard>
         </RowStandard>

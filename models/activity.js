@@ -3,7 +3,7 @@ var orm = require("../config/orm.js");
 
 var activity = {
   selectAll: function(cb) {
-      console.log("About to ask the orm for activities...");
+      // console.log("About to ask the orm for activities...");
     orm.selectAll("activities", function(res) {
       cb(res);
     });

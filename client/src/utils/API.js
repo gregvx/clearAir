@@ -85,6 +85,12 @@ export default {
   getDeqData: function(address) {
     // console.log("The api method getDeqData just got called with the param: " + address.href);
     return axios.put("/api/scrape",  address);
+  },
+
+  //ask back end for date
+  getDate: function() {
+    console.log("The api method getDate just got called.");
+    return axios.get("/api/getdate");
   }
 
 };

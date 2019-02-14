@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var axios = require("axios");
 var cheerio = require("cheerio");
+var moment = require("moment");
 
 // Import the model (user.js) to use its database functions.
 var user = require("../models/user.js");
@@ -423,6 +424,28 @@ router.put("/api/scrape", function (req, res) {
     res.json(days);
     // res.json(result);
   });
+});
+
+
+// ------------------------End Scraper--------------------
+
+
+
+// ------------------------Start DateCheck-----------------
+
+// A GET route for getting the date
+router.get("/api/getdate", function (req, res) {
+  // First, we use moment.js to get the date
+  var currentTimeObject = moment();
+  // var myDateTime = moment().format("MMM Do YYYY, h:mm:ss a");
+  var myDate = moment().format("MMM Do YYYY");
+  var myMonth = moment().format("M");
+  // console.log("the current time is: " + myDateTime + " and the month is " + myMonth);
+  var result = {fullDate: myDate, justMonth: myMonth};
+  // console.log("going to send the following back to the client:");
+  // console.log(result);
+  // console.log(currentTimeObject);
+  res.json(result);
 });
 
 
