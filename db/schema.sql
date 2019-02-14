@@ -39,7 +39,7 @@ CREATE TABLE activities
     act_name varchar(50),
     act_desc varchar(1000),
     act_href varchar(150),
-    act_img_href varchar(150),
+    act_img_href varchar(300),
     jan_avail boolean not null default 0,
     feb_avail boolean not null default 0,
     mar_avail boolean not null default 0,

@@ -14,3 +14,19 @@ export function List({ children }) {
 export function ListItem({ children }) {
   return <li className="list-group-item">{children}</li>;
 }
+
+export function CardList({ children }) {
+  return (
+    <div className="list-group">
+      {children}
+    </div>
+  );
+}
+
+export function ForecastList({ children }) {
+  return (
+    <div className="list-group">
+      {children}
+    </div>
+  );
+}

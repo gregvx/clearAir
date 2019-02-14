@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.css";
 
 // Exporting the Container, Row, and Col components from this file
 
@@ -12,9 +13,14 @@ export function Row({ fluid, children }) {
   return <div className={`row${fluid ? "-fluid" : ""}`}>{children}</div>;
 }
 
+// This Row component lets us use a bootstrap row without having to think about class names
+export function RowStandard({ children }) {
+  return <div className="row standardRow">{children}</div>;
+}
+
 // This Col component lets us size bootstrap columns with less syntax
 // e.g. <Col size="md-12"> instead of <div className="col-md-12">
-export function Col({ size, children }) {
+export function Col({ size, props, children }) {
   return (
     <div
       className={size
@@ -22,6 +28,14 @@ export function Col({ size, children }) {
         .map(size => "col-" + size)
         .join(" ")}
     >
+      {children}
+    </div>
+  );
+}
+
+export function ColStandard({ children }) {
+  return (
+    <div className="col standardCol col-md-7">
       {children}
     </div>
   );

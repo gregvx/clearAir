@@ -1,0 +1,11 @@
+.jumbotron {
+    height: 400px;
+    /* clear: both; */
+    /* padding-top: 120px; */
+    text-align: center;
+    background-color: lightblue;
+    background-image: url("../../images/knoll.jpg");
+    background-size: cover;
+    margin-top: 25px;
+    
+ }

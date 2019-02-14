@@ -1,0 +1,15 @@
+.standardRow {
+    /* text-justify: center; */
+    text-align: justify;
+    /* background-color:plum; */
+    /* position: absolute; */
+    display: block;
+}
+
+.standardCol {
+    text-align: center;
+    margin-right: auto;
+    margin-left:auto;
+    float: none;
+    margin: 0 auto;
+}

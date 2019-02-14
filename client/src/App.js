@@ -34,12 +34,14 @@ import UserLogin from "./pages/UserLogin";
 import UserRegister from "./pages/UserRegister";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
+import NavSpacer from "./components/NavSpacer";
 
 function App() {
   return (
     <Router>
       <div>
         <Nav />
+        <NavSpacer />
         <Switch>
           <Route exact path="/" component={HomeView} />
           <Route exact path="/locations" component={LocationsView} />
