@@ -1,0 +1,12 @@
+.jumbotron hr {
+    height: 3px;
+    border: none;
+    color: white;
+    background-color: white;
+}
+
+/* hr {
+    border: none;
+    size: 5px;
+    height: 5px;
+} */

@@ -5,8 +5,9 @@ import API from "../utils/API";
 import { List, ForecastList } from "../components/List";
 import { Forecast } from "../components/Forecast";
 import { ActCard } from "../components/ActCard";
-import { ColStandard, RowStandard, Container } from "../components/Grid"
-import Jumbotron from "../components/Jumbotron";;
+import { ColStandard, RowStandard, Container } from "../components/Grid";
+import Jumbotron from "../components/Jumbotron";
+import "./style.css";
 
 
 class HomeView extends Component {
