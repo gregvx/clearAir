@@ -27,6 +27,10 @@ export default {
   getActivities: function () {
     return axios.get("/api/activities");
   },
+  // Gets all activities
+  getSomeActivities: function (month) {
+    return axios.get("/api/someactivities/" + month);
+  },
   // Gets the activity with the given id
   getActivity: function (id) {
     return axios.get("/api/activities/" + id);

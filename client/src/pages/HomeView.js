@@ -35,9 +35,9 @@ class HomeView extends Component {
     cache_forecast: []
   };
   componentDidMount() {
-    this.loadDate();
+    this.loadDate(); //then load activities
     this.loadDeqData();
-    this.loadActivities();
+    // this.loadActivities();
   }
 
   loadDeqData = function () {
@@ -99,11 +99,23 @@ class HomeView extends Component {
 
   loadActivities = () => {
     // console.log("Need to do an API call from ActivitiesView...");
-    var month = this.state.current_month;
+    // var month = this.state.current_month;
     API.getActivities()
       .then(res => {
         // console.log("the API call should be done. now use the returned json to set the state.");
         // console.log("At this point, the res.data has " + res.data.activities.length + " number of activities.");
+        this.setState({ activities: res.data.activities });
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadSomeActivities = () => {
+    console.log("Need to do an API call from ActivitiesView...");
+    var month = this.state.current_month;
+    API.getSomeActivities(month)
+      .then(res => {
+        console.log("the API call should be done. now use the returned json to set the state.");
+        console.log("At this point, the res.data has " + res.data.activities.length + " number of activities.");
         this.setState({ activities: res.data.activities });
       })
       .catch(err => console.log(err));
@@ -118,6 +130,7 @@ class HomeView extends Component {
         console.log(res.data);
         this.setState({ current_date: res.data.fullDate });
         this.setState({ current_month: res.data.justMonth });
+        this.loadSomeActivities();
       })
       .catch(err => console.log(err));
   };

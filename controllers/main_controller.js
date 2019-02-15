@@ -119,6 +119,62 @@ router.get("/api/activities", function (req, res) {
   });
 });
 
+//get some activities
+router.get("/api/someactivities/:month", function (req, res) {
+  // console.log("custom route for someactivities get just fired.");
+  var myMonth = req.params.id;
+  var dbField = "jan_avail";
+  switch (myMonth) {
+    case 1:
+    dbField = "jan_avail";
+    break;
+    case 2:
+    dbField = "feb_avail";
+    break;
+    case 3:
+    dbField = "mar_avail";
+    break;
+    case 4:
+    dbField = "apr_avail";
+    break;
+    case 5:
+    dbField = "may_avail";
+    break;
+    case 6:
+    dbField = "jun_avail";
+    break;
+    case 7:
+    dbField = "jul_avail";
+    break;
+    case 8:
+    dbField = "aug_avail";
+    break;
+    case 9:
+    dbField = "sep_avail";
+    break;
+    case 10:
+    dbField = "oct_avail";
+    break;
+    case 11:
+    dbField = "nov_avail";
+    break;
+    case 12:
+    dbField = "dec_avail";
+    break;
+    default:
+    dbField = "jan_avail";
+  }
+  var condition = dbField + " = 1";
+  activity.selectSome(condition, function (data) {
+    var activitiesArray = {
+      activities: data
+    };
+    console.log(activitiesArray);
+    console.log("just consolelogged the activites returned from the db in the main controller")
+    res.json(activitiesArray);
+  });
+});
+
 //post/create a single activity
 router.post("/api/activity", function (req, res) {
   console.log("custom route for activities put just fired in the main controller.");

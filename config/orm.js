@@ -63,7 +63,7 @@ var orm = {
   },
   selectOne: function (table, condition, cb) {
     var queryString = "SELECT * FROM " + table + " WHERE " + condition + ";";
-    // console.log("About to fire a SQL query using the command: " + queryString);
+    console.log("About to fire a SQL query using the command: " + queryString);
     connection.query(queryString, function (err, result) {
       if (err) {
         throw err;
