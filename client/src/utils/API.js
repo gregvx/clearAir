@@ -50,9 +50,9 @@ export default {
     // console.log("The api method editActivity just got called. The id param is: " + id + ");
     return axios.put("/api/activities/" + id, activityData);
   },
-   // Edits an activity in the database
+   // Edits an activity in the database but do it more securely?
    editActivity2: function (id, activityData) {
-    console.log("The api method editActivity2 just got called. The id param is: " + id);
+    // console.log("The api method editActivity2 just got called. The id param is: " + id);
     return axios.put("/api/activities2/" + id, activityData);
   },
 
@@ -84,6 +84,11 @@ export default {
     // console.log("The api method editUser just got called. The id param is: " + id + " and the userData param is: " + userData);
     return axios.put("/api/users/" + id, userData);
   },
+   // Edits a user in the database but do it more securely?
+   editUser2: function (id, userData) {
+    // console.log("The api method editUser2 just got called. The id param is: " + id);
+    return axios.put("/api/users2/" + id, userData);
+  },
 
   //scrape the DEQ website
   getDeqData: function(address) {
@@ -93,7 +98,7 @@ export default {
 
   //ask back end for date
   getDate: function() {
-    console.log("The api method getDate just got called.");
+    // console.log("The api method getDate just got called.");
     return axios.get("/api/getdate");
   }
 

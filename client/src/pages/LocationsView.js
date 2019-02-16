@@ -11,8 +11,6 @@ class LocationsView extends Component {
   state = {
     locations: [],
     location_name: ""
-    // author: "",
-    // synopsis: ""
   };
 
   componentDidMount() {

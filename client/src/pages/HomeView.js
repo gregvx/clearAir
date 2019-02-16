@@ -111,12 +111,12 @@ class HomeView extends Component {
   };
 
   loadSomeActivities = () => {
-    console.log("Need to do an API call from ActivitiesView...");
+    // console.log("Need to do an API call from ActivitiesView...");
     var month = this.state.current_month;
     API.getSomeActivities(month)
       .then(res => {
-        console.log("the API call should be done. now use the returned json to set the state.");
-        console.log("At this point, the res.data has " + res.data.activities.length + " number of activities.");
+        // console.log("the API call should be done. now use the returned json to set the state.");
+        // console.log("At this point, the res.data has " + res.data.activities.length + " number of activities.");
         this.setState({ activities: res.data.activities });
       })
       .catch(err => console.log(err));
@@ -126,9 +126,9 @@ class HomeView extends Component {
     // console.log("Need to do an API call from HomeView for a date...");
     API.getDate()
       .then(res => {
-        console.log("the API call should be done. now use the returned json to set the state.");
-        console.log("At this point, the res.data is");
-        console.log(res.data);
+        // console.log("the API call should be done. now use the returned json to set the state.");
+        // console.log("At this point, the res.data is");
+        // console.log(res.data);
         this.setState({ current_date: res.data.fullDate });
         this.setState({ current_month: res.data.justMonth });
         this.loadSomeActivities();
@@ -137,8 +137,8 @@ class HomeView extends Component {
   };
 
   printState = function () {
-    console.log("Just fired render method. Here is what state is looking like:");
-    console.log(this.state);
+    // console.log("Just fired render method. Here is what state is looking like:");
+    // console.log(this.state);
   }
 
 

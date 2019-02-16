@@ -9,7 +9,7 @@ var activity = {
     });
   },
   selectSome: function (condition, cb) {
-    console.log("About to ask the orm for some activities...");
+    // console.log("About to ask the orm for some activities given that the condition is: " + condition);
     orm.selectOne("activities", condition, function (res) {
       cb(res);
     });

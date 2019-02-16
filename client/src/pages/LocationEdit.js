@@ -20,18 +20,11 @@ class LocationEdit extends Component {
       .catch(err => console.log(err));
   }
 
+  //this method gets called after done editing a location. It just moves the view to the next logical place.
   loadLocations = () => {
-    //load locationView component/page
     window.location.assign("/locations");
-  //this opens in a new tab (believe that is what the owner of the question wanted if not you can do
-  // window.location.href = "/insert/your/path/here".
   };
 
-  deleteLocation = id => {
-    API.deleteLocation(id)
-      .then(res => this.loadLocations())
-      .catch(err => console.log(err));
-  };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -42,11 +35,8 @@ class LocationEdit extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    // if (this.state.title && this.state.author) {
     if (this.state.location_name) {
       API.editLocation(this.state.id, {
-        // title: this.state.title,
-        // author: this.state.author,
         location_name: this.state.new_location_name
       })
         .then(res => this.loadLocations())
@@ -73,20 +63,7 @@ class LocationEdit extends Component {
                 name="new_location_name"
                 placeholder="Name of new area..."
               />
-              {/* <Input
-                value={this.state.author}
-                onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              />
-              <TextArea
-                value={this.state.synopsis}
-                onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
-              /> */}
               <FormBtn
-                // disabled={!(this.state.author && this.state.title)}
                 disabled={!(this.state.location_name)}
                 onClick={this.handleFormSubmit}
               >
@@ -95,16 +72,6 @@ class LocationEdit extends Component {
             </form>
           </Col>
         </Row>
-        {/* <Row>
-          <Col size="md-10 md-offset-1">
-            <article>
-              <h1>Synopsis</h1>
-              <p>
-                {this.state.book.synopsis}
-              </p>
-            </article>
-          </Col>
-        </Row> */}
         <Row>
           <Col size="md-2">
             <Link to="/locations">← Back to Locations</Link>

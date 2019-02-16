@@ -290,7 +290,7 @@ class ActivitiesView extends Component {
                 disabled={!(this.state.act_href && this.state.act_img_href && this.state.act_desc && this.state.latitude && this.state.longitude)}
                 onClick={this.handleFormSubmit}
               >
-                Submit User
+                Add Activity
               </FormBtn>
             </form>
           </Col>

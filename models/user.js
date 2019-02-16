@@ -33,6 +33,11 @@ var user = {
       cb(res);
     });
   },
+  updateOne2: function (cols, vals, condition, cb) {
+    orm.updateOne2("users", cols, vals, condition, function (res) {
+      cb(res);
+    });
+  },
   deleteOne: function(condition, cb) {
     orm.deleteOne("users", condition, function(res) {
       cb(res);

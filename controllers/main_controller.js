@@ -121,44 +121,44 @@ router.get("/api/activities", function (req, res) {
 
 //get some activities
 router.get("/api/someactivities/:month", function (req, res) {
-  // console.log("custom route for someactivities get just fired.");
-  var myMonth = req.params.id;
+  var myMonth = req.params.month;
+  // console.log("custom route for someactivities get just fired. month of interest is: " + myMonth);
   var dbField = "jan_avail";
   switch (myMonth) {
-    case 1:
+    case '1':
     dbField = "jan_avail";
     break;
-    case 2:
+    case '2':
     dbField = "feb_avail";
     break;
-    case 3:
+    case '3':
     dbField = "mar_avail";
     break;
-    case 4:
+    case '4':
     dbField = "apr_avail";
     break;
-    case 5:
+    case '5':
     dbField = "may_avail";
     break;
-    case 6:
+    case '6':
     dbField = "jun_avail";
     break;
-    case 7:
+    case '7':
     dbField = "jul_avail";
     break;
-    case 8:
+    case '8':
     dbField = "aug_avail";
     break;
-    case 9:
+    case '9':
     dbField = "sep_avail";
     break;
-    case 10:
+    case '10':
     dbField = "oct_avail";
     break;
-    case 11:
+    case '11':
     dbField = "nov_avail";
     break;
-    case 12:
+    case '12':
     dbField = "dec_avail";
     break;
     default:
@@ -169,15 +169,15 @@ router.get("/api/someactivities/:month", function (req, res) {
     var activitiesArray = {
       activities: data
     };
-    console.log(activitiesArray);
-    console.log("just consolelogged the activites returned from the db in the main controller")
+    // console.log(activitiesArray);
+    // console.log("just consolelogged the activites returned from the db in the main controller")
     res.json(activitiesArray);
   });
 });
 
 //post/create a single activity
 router.post("/api/activity", function (req, res) {
-  console.log("custom route for activities put just fired in the main controller.");
+  // console.log("custom route for activities put just fired in the main controller.");
   activity.insertOne(["act_name",
     "act_desc",
     "act_href",
@@ -354,12 +354,12 @@ router.delete("/api/activities/:id", function (req, res) {
 
 //get all users
 router.get("/api/users", function (req, res) {
-  console.log("custom route for user get just fired.");
+  // console.log("custom route for user get just fired.");
   user.selectAll(function (data) {
     var usersArray = {
       users: data
     };
-    console.log(usersArray);
+    // console.log(usersArray);
     res.json(usersArray);
   });
 });
@@ -368,9 +368,12 @@ router.get("/api/users", function (req, res) {
 router.post("/api/users", function (req, res) {
   //take the password, create a salt, and create a hash
   var unencryptedPass = req.body.password;
+  //TODO create a salt
+  //TODO hash halt and unencrypted password
   var salt = "1234";
   var hash = "5678";
   console.log("Route for users put/create just fired.");
+  //use the salt and hash created above to add salt and hash values to the database
   user.insertOne(["email", "first_name", "last_name", "password_hash", "salt", "home_id", "work_id", "school_id"],
     [req.body.email, req.body.first_name, req.body.last_name, hash, salt, req.body.home_id, req.body.work_id, req.body.school_id], function (result) {
       // Send back the ID of the new quote
@@ -397,18 +400,49 @@ router.post("/api/userLogin/", function (req, res) {
   });
 });
 
+//edit a user2 
+//(this differs from edit a user(1) in that the paramatrs are given in two arrays instead of a single object)
+router.put("/api/users2/:id", function (req, res) {
+  // console.log("in the controller method for editing a user with the id of: " + req.params.id);
+  var condition = "id = " + req.params.id;
+  // console.log("condition", condition);
+  user.updateOne2(["email",
+    "first_name",
+    "last_name",
+    "home_id",
+    "work_id",
+    "school_id"
+  ],
+    [req.body.email,
+    req.body.first_name,
+    req.body.last_name,
+    req.body.home_id,
+    req.body.work_id,
+    req.body.school_id
+    ],
+    condition,
+    function (result) {
+      if (result.affectedRows != 2 && result.affectedRows != 1) {
+        // If one or two rows were not affected on an 'insert with duplicate id' statement, then the ID must not exist, so 404
+        return res.status(404).end();
+      }
+      res.status(200).end();
+    }
+  );
+});
+
 // edit a user
 router.put("/api/users/:id", function (req, res) {
-  console.log("in the controller method for editing a user with the id of: " + req.params.id);
+  // console.log("in the controller method for editing a user with the id of: " + req.params.id);
   var condition = "id = " + req.params.id;
-  console.log("condition", condition);
+  // console.log("condition", condition);
   user.updateOne(
     {
       email: req.body.email,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
-      password_hash: req.body.password_hash,
-      salt: req.body.salt,
+      // password_hash: req.body.password_hash,
+      // salt: req.body.salt,
       home_id: req.body.home_id,
       work_id: req.body.work_id,
       school_id: req.body.school_id
@@ -426,13 +460,13 @@ router.put("/api/users/:id", function (req, res) {
 
 //delete a user
 router.delete("/api/users/:id", function (req, res) {
-  console.log("in the controller method for deleting a user with the id of: " + req.params.id);
+  // console.log("in the controller method for deleting a user with the id of: " + req.params.id);
   var condition = "id = " + req.params.id;
-  console.log("condition", condition);
+  // console.log("condition", condition);
   user.deleteOne(
     condition,
     function (result) {
-      console.log("Just attempted to delete a row in the DB. affectedRows is: " + result.affectedRows);
+      // console.log("Just attempted to delete a row in the DB. affectedRows is: " + result.affectedRows);
       // return res.json(result);
       if (result.affectedRows === 0) {
         // If no rows were changed, then the ID must not exist, so 404
