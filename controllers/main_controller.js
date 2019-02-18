@@ -354,7 +354,9 @@ router.delete("/api/activities/:id", function (req, res) {
 
 //get all users
 router.get("/api/users", function (req, res) {
-  // console.log("custom route for user get just fired.");
+  console.log("main controller route for user get just fired.");
+  console.log("the seesion info is: ")
+  console.log(req.session);
   user.selectAll(function (data) {
     var usersArray = {
       users: data
@@ -392,12 +394,41 @@ router.get("/api/users/:id", function (req, res) {
 
 //check login credentials and return a single user
 router.post("/api/userLogin/", function (req, res) {
-  // console.log("custom route for user login method just fired.");
+  // console.log("main controller route for user login method just fired.");
+  // console.log("need to ask about the user params supplied which were: ");
+  // console.log(req.body);
   user.login(req.body, function (data) {
     console.log("the main controller just got a response from the api call and it is");
     console.log(data);
+    console.log("or, more precisely, ");
+    console.log(data[0]);
+    if (data[0]) {
+      console.log("So now, we set the req.session.userId to " + data[0].id);
+      req.session.userId = data[0].id;
+      req.session.userEmail = data[0].email;
+    }
+    else {
+      console.log("main controller method now knows that login failed.");
+    }
+    console.log("The session is now: ");
+    console.log(req.session);
     res.json(data);
   });
+});
+
+// check session id for user logged in
+router.get("/api/userLoggedIn", function (req, res) {
+  console.log("userLoggedIn method firing from main controller. going to return the session info: ");
+  console.log(req.session);
+  res.json(req.session);
+});
+
+// log out the user and update the session
+router.post("/api/userLogOut", function (req, res) {
+  console.log("userLogOut method firing from main controller. going to return the new session info: ");
+  req.session.destroy();
+  console.log(req.session);
+  res.json(req.session);
 });
 
 //edit a user2 
@@ -540,6 +571,24 @@ router.get("/api/getdate", function (req, res) {
 
 
 // ------------------------End Scraper--------------------
+
+
+// ------------------------Start Login-----------------
+
+// A GET route for login
+router.get("/api/userLogin", function (req, res) {
+  if (req.session.view) {
+    req.session.views++;
+  }
+  else {
+    req.session.views = 1;
+  }
+  console.log(req.session);
+  res.json({});
+});
+
+
+// ------------------------End Login--------------------
 
 // Export routes for server.js to use.
 module.exports = router;

@@ -10,3 +10,7 @@
     size: 5px;
     height: 5px;
 } */
+
+.errorMessage {
+    color: red;
+}

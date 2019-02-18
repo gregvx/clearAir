@@ -9,21 +9,36 @@ import { Input, FormBtn } from "../components/Form";
 
 class UserLogin extends Component {
   state = {
-    //this holds a list of current users
-    users: [],
-    //this holds the data for a new user to create
     email: "",
-    first_name: "",
-    last_name: "",
-    home_id: null,
-    work_id: null,
-    school_id: null,
-    password: ""
+    password: "",
+    //this holds the error message text that displays near the form when login fails
+    errorMsg: ""
   };
 
-  // componentDidMount() {
-  //   this.loadUsers();
-  // }
+  componentDidMount() {
+    //need to do a check to make sure a user isn't currently logged in, if so, need to
+    //destroy the session id
+    this.logOutCurrentUser();
+  };
+
+  logOutCurrentUser = () => {
+    API.userLoggedIn()
+      .then(res => {
+        console.log("The userlogin component got an answer back from the API. the result was:");
+        console.log(res);
+        console.log("So the user id of the currently logged in user is: ");
+        console.log(res.data.userId);
+        if (res.data.userId) {
+          API.userLogOut()
+            .then(res => {
+              //rerender the login page so the navbar will now display "log in" istead of user greeting
+              window.location.assign("/UserLogin")
+            })
+            .catch(err => console.log(err));
+        }
+      })
+      .catch(err => console.log(err));
+  };
 
   // loadUsers = () => {
   //   // console.log("Need to do an API call from UserView...");
@@ -36,7 +51,7 @@ class UserLogin extends Component {
   //     .catch(err => console.log(err));
   // };
 
-//TODO :: Figure out what happens when user logs in
+  //TODO :: Figure out what happens when user logs in
   handleSuccessfulLogin = (id) => {
     console.log("The view got a response from the backend on the login question. It was:");
     console.log(id);
@@ -53,7 +68,7 @@ class UserLogin extends Component {
   };
 
   handleFormSubmit = event => {
-    console.log("Handle form submit just fired. Need to do an API call...");
+    // console.log("Handle form submit just fired. Need to do an API call...");
     event.preventDefault();
     if (this.state.email && this.state.password) {
       API.checkUser({
@@ -61,10 +76,19 @@ class UserLogin extends Component {
         password: this.state.password
       })
         .then(res => {
-            // this.handleSuccessfulLogin(res)
-            console.log("the api request should be done now.");
-            console.log(res.data);
+          // this.handleSuccessfulLogin(res)
+          // console.log("the api request for user login should be done now. The response was:");
+          // console.log(res.data);
+          // console.log("the userlogin view needs to make a decision")
+          if (res.data.length !== 0) {
+            //since user is succefully logged in, reload the home page
+            window.location.assign("/");
           }
+          else {
+            // console.log("the userlogin view now knows that the login faailed. view needs to handle that.");
+            this.setState({ errorMsg: "Login Failed. Try Again." })
+          }
+        }
         )
         .catch(err => console.log(err));
     }
@@ -77,6 +101,7 @@ class UserLogin extends Component {
         <Row>
           <Col size="md-6">
             <h1>Login:</h1>
+            <h3 className="errorMessage">{this.state.errorMsg}</h3>
             <form>
               <Input
                 value={this.state.email}

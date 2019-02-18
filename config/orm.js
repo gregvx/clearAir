@@ -199,16 +199,16 @@ var orm = {
   },
   credentialCheck: function (table, creds, cb) {
     var queryString = "SELECT * FROM " + table + " WHERE email = '" + creds.email + "';";
-    console.log("About to fire a SQL query using the command: " + queryString);
+    // console.log("About to fire a SQL query using the command: " + queryString);
     connection.query(queryString, function (err, result) {
       if (err) {
         throw err;
       }
       //if we get to this point, we need to check and see if the password is correct
       //TODO: check if password is correct
-      console.log("given the supplied email, database returns: ");
-      console.log("The password you entered was: " + creds.password + " and the result var is");
-      console.log(result);
+      // console.log("given the supplied email, database returns: ");
+      // console.log("The password you entered was: " + creds.password + " and the result var is");
+      // console.log(result);
       cb(result);
     });
   },

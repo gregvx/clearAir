@@ -50,8 +50,8 @@ export default {
     // console.log("The api method editActivity just got called. The id param is: " + id + ");
     return axios.put("/api/activities/" + id, activityData);
   },
-   // Edits an activity in the database but do it more securely?
-   editActivity2: function (id, activityData) {
+  // Edits an activity in the database but do it more securely?
+  editActivity2: function (id, activityData) {
     // console.log("The api method editActivity2 just got called. The id param is: " + id);
     return axios.put("/api/activities2/" + id, activityData);
   },
@@ -70,6 +70,16 @@ export default {
     // console.log(userCreds);
     return axios.post("/api/userLogin", userCreds);
   },
+  //Asks which user (if any) is currently logged in
+  userLoggedIn: function () {
+    console.log("The api method userLogedIn just got called.");
+    return axios.get("/api/userLoggedIn/");
+  },
+  //Logs out the currently logged in user
+  userLogOut: function () {
+    console.log("The api method userLogOut just got called.");
+    return axios.post("/api/userLogOut/");
+  },
   // Deletes the user with the given id
   deleteUser: function (id) {
     return axios.delete("/api/users/" + id);
@@ -79,25 +89,25 @@ export default {
     // console.log("The saveUser method just got called in the API. attempting now...");
     return axios.post("/api/users", userData);
   },
-   // Edits a user in the database
-   editUser: function (id, userData) {
+  // Edits a user in the database
+  editUser: function (id, userData) {
     // console.log("The api method editUser just got called. The id param is: " + id + " and the userData param is: " + userData);
     return axios.put("/api/users/" + id, userData);
   },
-   // Edits a user in the database but do it more securely?
-   editUser2: function (id, userData) {
+  // Edits a user in the database but do it more securely?
+  editUser2: function (id, userData) {
     // console.log("The api method editUser2 just got called. The id param is: " + id);
     return axios.put("/api/users2/" + id, userData);
   },
 
   //scrape the DEQ website
-  getDeqData: function(address) {
+  getDeqData: function (address) {
     // console.log("The api method getDeqData just got called with the param: " + address.href);
-    return axios.put("/api/scrape",  address);
+    return axios.put("/api/scrape", address);
   },
 
   //ask back end for date
-  getDate: function() {
+  getDate: function () {
     // console.log("The api method getDate just got called.");
     return axios.get("/api/getdate");
   }
