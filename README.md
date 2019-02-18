@@ -2,8 +2,6 @@
 
 This is a React.js MVC app with a MySQL database deployed to Heroku.
 
-# this app is still in active development!!
-
 This webapp allows users to view outdoor recreation activities closest to them that will be in a part of the Wasatch Front where the air quality forcast from the Utah Division of Environmental Quality is "Moderate" or better.
 
 The Utah DEQ website is scraped with Axios and the information is parsed with Cheerio.
@@ -20,6 +18,7 @@ This was built and designed as a final project for a coding bootcamp at the Univ
 * Must have both GET and POST routes for retrieving and adding new data.
 * Must be deployed using Heroku (with Data).
 * Must utilize at least two libraries, packages, or technologies that we haven't discussed.
+    (This app utilized the express-session and bcrypt packages to meet this requirement)
 * Must allow for or involve the authentication of users in some way.
 * Must have a polished frontend / UI.
 * Must have folder structure that meets MVC Paradigm.
