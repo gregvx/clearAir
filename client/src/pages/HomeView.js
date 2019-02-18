@@ -31,7 +31,7 @@ class HomeView extends Component {
     ogden_name: "Ogden",
     ogden_href: "https://air.utah.gov/forecast.php?id=o2",
     ogden_forecast: [],
-    cache_name: "Logan/Clearfield",
+    cache_name: "Logan/Smithfield",
     cache_href: "https://air.utah.gov/forecast.php?id=sm",
     cache_forecast: []
   };

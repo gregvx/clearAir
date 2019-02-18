@@ -10,22 +10,28 @@ class Nav extends Component {
   };
 
   componentDidMount() {
-    console.log("The navbar component has mounted")
+    // console.log("The navbar component has mounted")
     this.askAboutLogin();
   }
 
   askAboutLogin = () => {
-    console.log("nav component needs to make an api call...");
+    // console.log("nav component needs to make an api call...");
     API.userLoggedIn()
       .then(res => {
         console.log("The nav component got an answer back from the API. the result was:");
         console.log(res);
-        console.log("So the user id of the currently logged in user is: ");
-        console.log(res.data.userId);
+        console.log("So the user id of the currently logged in user is: " + res.data.userId);
+        // console.log(res.data.userId);
         if (res.data.userId) {
-          this.setState({ loginText: res.data.userEmail + " Log Out"});
-          //TODO check the res.data to see if isAdmin field for user is true or false and then set state accordingly
-          this.setState({ adminLoggedIn: true });
+          if (res.data.firstName) {
+            this.setState({ loginText: res.data.firstName + " Log Out"});
+          }
+          else {
+            this.setState({ loginText: res.data.userEmail + " Log Out"});
+          }
+          if (res.data.isAdmin === 1 || res.data.isAdmin === '1'){
+            this.setState({ adminLoggedIn: true });
+          }
         }
         else {
           this.setState({ loginText: "Log In" });
@@ -36,6 +42,8 @@ class Nav extends Component {
   };
 
   render() {
+    console.log("Navbar now rendering. The state of the nav component is: ");
+    console.log(this.state);
     //first we set up some jsx for links that may or may not need to be displayed
     let LocationLink;
     let ActivityLink;

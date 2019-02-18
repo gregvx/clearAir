@@ -22,6 +22,7 @@ CREATE TABLE users
     home_id int(5),
     work_id int(5),
     school_id int(5),
+    isAdmin boolean not null default 0,
     PRIMARY KEY (id),
     UNIQUE KEY (email),
     KEY (home_id),

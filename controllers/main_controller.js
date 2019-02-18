@@ -426,6 +426,8 @@ router.post("/api/userLogin/", function (req, res) {
       console.log("So now, we set the req.session.userId to " + data[0].id);
       req.session.userId = data[0].id;
       req.session.userEmail = data[0].email;
+      req.session.isAdmin = data[0].isAdmin;
+      req.session.firstName = data[0].first_name;
     }
     else {
       console.log("main controller method now knows that login failed.");
