@@ -18,9 +18,9 @@ class Nav extends Component {
     // console.log("nav component needs to make an api call...");
     API.userLoggedIn()
       .then(res => {
-        console.log("The nav component got an answer back from the API. the result was:");
-        console.log(res);
-        console.log("So the user id of the currently logged in user is: " + res.data.userId);
+        // console.log("The nav component got an answer back from the API. the result was:");
+        // console.log(res);
+        // console.log("So the user id of the currently logged in user is: " + res.data.userId);
         // console.log(res.data.userId);
         if (res.data.userId) {
           if (res.data.firstName) {
@@ -42,8 +42,8 @@ class Nav extends Component {
   };
 
   render() {
-    console.log("Navbar now rendering. The state of the nav component is: ");
-    console.log(this.state);
+    // console.log("Navbar now rendering. The state of the nav component is: ");
+    // console.log(this.state);
     //first we set up some jsx for links that may or may not need to be displayed
     let LocationLink;
     let ActivityLink;

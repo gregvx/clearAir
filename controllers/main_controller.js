@@ -3,6 +3,7 @@ var router = express.Router();
 var axios = require("axios");
 var cheerio = require("cheerio");
 var moment = require("moment");
+var bcrypt = require('bcrypt');
 
 // Import the model (user.js) to use its database functions.
 var user = require("../models/user.js");
@@ -146,43 +147,43 @@ router.get("/api/someactivities/:month", function (req, res) {
   var dbField = "jan_avail";
   switch (myMonth) {
     case '1':
-    dbField = "jan_avail";
-    break;
+      dbField = "jan_avail";
+      break;
     case '2':
-    dbField = "feb_avail";
-    break;
+      dbField = "feb_avail";
+      break;
     case '3':
-    dbField = "mar_avail";
-    break;
+      dbField = "mar_avail";
+      break;
     case '4':
-    dbField = "apr_avail";
-    break;
+      dbField = "apr_avail";
+      break;
     case '5':
-    dbField = "may_avail";
-    break;
+      dbField = "may_avail";
+      break;
     case '6':
-    dbField = "jun_avail";
-    break;
+      dbField = "jun_avail";
+      break;
     case '7':
-    dbField = "jul_avail";
-    break;
+      dbField = "jul_avail";
+      break;
     case '8':
-    dbField = "aug_avail";
-    break;
+      dbField = "aug_avail";
+      break;
     case '9':
-    dbField = "sep_avail";
-    break;
+      dbField = "sep_avail";
+      break;
     case '10':
-    dbField = "oct_avail";
-    break;
+      dbField = "oct_avail";
+      break;
     case '11':
-    dbField = "nov_avail";
-    break;
+      dbField = "nov_avail";
+      break;
     case '12':
-    dbField = "dec_avail";
-    break;
+      dbField = "dec_avail";
+      break;
     default:
-    dbField = "jan_avail";
+      dbField = "jan_avail";
   }
   var condition = dbField + " = 1";
   activity.selectSome(condition, function (data) {
@@ -388,19 +389,25 @@ router.get("/api/users", function (req, res) {
 
 //post/create a single user
 router.post("/api/users", function (req, res) {
+  console.log("Route for users put/create just fired.");
   //take the password, create a salt, and create a hash
   var unencryptedPass = req.body.password;
   //TODO create a salt
   //TODO hash halt and unencrypted password
-  var salt = "1234";
-  var hash = "5678";
-  console.log("Route for users put/create just fired.");
-  //use the salt and hash created above to add salt and hash values to the database
-  user.insertOne(["email", "first_name", "last_name", "password_hash", "salt", "home_id", "work_id", "school_id"],
-    [req.body.email, req.body.first_name, req.body.last_name, hash, salt, req.body.home_id, req.body.work_id, req.body.school_id], function (result) {
-      // Send back the ID of the new quote
-      res.json({ id: result.insertId });
-    });
+  bcrypt.hash(unencryptedPass, 10, function (err, hash) {
+    //we are inside a cb func now to ensure that we wait until hash is created, then store
+    //it in the database
+    var salt = "1234";
+    // var hash = "5678";
+    //use the hash created above to add salt and hash values to the database
+    console.log("The hash has now been created. It is: ");
+    console.log(hash);
+    user.insertOne(["email", "first_name", "last_name", "password_hash", "salt", "home_id", "work_id", "school_id"],
+      [req.body.email, req.body.first_name, req.body.last_name, hash, salt, req.body.home_id, req.body.work_id, req.body.school_id], function (result) {
+        // Send back the ID of the new quote
+        res.json({ id: result.insertId });
+      });
+  })
 });
 
 //get a single user for review
@@ -418,38 +425,62 @@ router.post("/api/userLogin/", function (req, res) {
   // console.log("need to ask about the user params supplied which were: ");
   // console.log(req.body);
   user.login(req.body, function (data) {
-    console.log("the main controller just got a response from the api call and it is");
-    console.log(data);
-    console.log("or, more precisely, ");
-    console.log(data[0]);
+    // console.log("the main controller just got a response from the api call and it is");
+    // console.log(data);
+    // console.log("or, more precisely, ");
+    // console.log(data[0]);
+    //if data[0] is undefined, no user exists in the database with that email
     if (data[0]) {
-      console.log("So now, we set the req.session.userId to " + data[0].id);
-      req.session.userId = data[0].id;
-      req.session.userEmail = data[0].email;
-      req.session.isAdmin = data[0].isAdmin;
-      req.session.firstName = data[0].first_name;
+      //the condition here only works if some row was returned from the database. since the email
+      //must therefore be good, lets check the password
+      // console.log("Now, we need to check the password " + req.body.password + " against the hash " + data[0].password_hash)
+      bcrypt.compare(req.body.password, data[0].password_hash, function(suberr, subres) {
+        if(subres) {
+          //passwords match
+          //so, now we know the user supplied a valid email address and password
+          // console.log("So now, we set the req.session.userId to " + data[0].id);
+          req.session.userId = data[0].id;
+          req.session.userEmail = data[0].email;
+          req.session.isAdmin = data[0].isAdmin;
+          req.session.firstName = data[0].first_name;
+          // console.log("The session is now: ");
+          // console.log(req.session);
+          res.json({authCheck: "authenticated"});
+        }
+        else {
+          //passwords don't match
+          // console.log("main controller method now knows that login failed due to a bad password.");
+          // console.log("The session is now: ");
+          // console.log(req.session);
+          //since the password is bad on this known user, we need to zero out the user data in
+          //the API response before passing it to the view that called this method
+          // console.log("and the data is now: ");
+          data = [];
+          res.json({authCheck: "failed"});
+        }
+      });
     }
     else {
-      console.log("main controller method now knows that login failed.");
+      // console.log("main controller method now knows that login failed due to an invalid email address.");
+      // console.log("The session is now: ");
+      // console.log(req.session);
+      res.json({authCheck: "failed"});
     }
-    console.log("The session is now: ");
-    console.log(req.session);
-    res.json(data);
   });
 });
 
 // check session id for user logged in
 router.get("/api/userLoggedIn", function (req, res) {
-  console.log("userLoggedIn method firing from main controller. going to return the session info: ");
-  console.log(req.session);
+  // console.log("userLoggedIn method firing from main controller. going to return the session info: ");
+  // console.log(req.session);
   res.json(req.session);
 });
 
 // log out the user and update the session
 router.post("/api/userLogOut", function (req, res) {
-  console.log("userLogOut method firing from main controller. going to return the new session info: ");
+  // console.log("userLogOut method firing from main controller. going to return the new session info: ");
   req.session.destroy();
-  console.log(req.session);
+  // console.log(req.session);
   res.json(req.session);
 });
 
@@ -584,7 +615,7 @@ router.get("/api/getdate", function (req, res) {
   var myDate = moment().format("MMM Do YYYY");
   var myMonth = moment().format("M");
   // console.log("the current time is: " + myDateTime + " and the month is " + myMonth);
-  var result = {fullDate: myDate, justMonth: myMonth};
+  var result = { fullDate: myDate, justMonth: myMonth };
   // console.log("going to send the following back to the client:");
   // console.log(result);
   // console.log(currentTimeObject);

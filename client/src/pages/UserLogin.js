@@ -24,10 +24,10 @@ class UserLogin extends Component {
   logOutCurrentUser = () => {
     API.userLoggedIn()
       .then(res => {
-        console.log("The userlogin component got an answer back from the API. the result was:");
-        console.log(res);
-        console.log("So the user id of the currently logged in user is: ");
-        console.log(res.data.userId);
+        // console.log("The userlogin component got an answer back from the API. the result was:");
+        // console.log(res);
+        // console.log("So the user id of the currently logged in user is: ");
+        // console.log(res.data.userId);
         if (res.data.userId) {
           API.userLogOut()
             .then(res => {
@@ -40,25 +40,6 @@ class UserLogin extends Component {
       .catch(err => console.log(err));
   };
 
-  // loadUsers = () => {
-  //   // console.log("Need to do an API call from UserView...");
-  //   API.getUsers()
-  //     .then(res => {
-  //       // console.log("the API call should be done. now use the returned json to set the state.");
-  //       // console.log("At this point, the res.data has " + res.data.users.length + " number of users.");
-  //       this.setState({ users: res.data.users });
-  //     })
-  //     .catch(err => console.log(err));
-  // };
-
-  //TODO :: Figure out what happens when user logs in
-  handleSuccessfulLogin = (id) => {
-    console.log("The view got a response from the backend on the login question. It was:");
-    console.log(id);
-    // API.getUser(id)
-    //   .then()
-    //   .catch(err => console.log(err));
-  };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -76,11 +57,10 @@ class UserLogin extends Component {
         password: this.state.password
       })
         .then(res => {
-          // this.handleSuccessfulLogin(res)
-          // console.log("the api request for user login should be done now. The response was:");
-          // console.log(res.data);
+          // console.log("the api request for user credential check should be done now. The response was:");
+          // console.log(res.data.authCheck);
           // console.log("the userlogin view needs to make a decision")
-          if (res.data.length !== 0) {
+          if (res.data.authCheck === "authenticated") {
             //since user is succefully logged in, reload the home page
             window.location.assign("/");
           }

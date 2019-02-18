@@ -18,7 +18,6 @@ CREATE TABLE users
     first_name varchar(40),
     last_name varchar(40),
     password_hash varchar(255),
-    salt varchar(255),
     home_id int(5),
     work_id int(5),
     school_id int(5),

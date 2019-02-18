@@ -77,12 +77,12 @@ export default {
   },
   //Asks which user (if any) is currently logged in
   userLoggedIn: function () {
-    console.log("The api method userLogedIn just got called.");
+    // console.log("The api method userLogedIn just got called.");
     return axios.get("/api/userLoggedIn/");
   },
   //Logs out the currently logged in user
   userLogOut: function () {
-    console.log("The api method userLogOut just got called.");
+    // console.log("The api method userLogOut just got called.");
     return axios.post("/api/userLogOut/");
   },
   // Deletes the user with the given id
