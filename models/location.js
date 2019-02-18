@@ -24,6 +24,11 @@ var location = {
       cb(res);
     });
   },
+  updateOne2: function (cols, vals, condition, cb) {
+    orm.updateOne2("locations", cols, vals, condition, function (res) {
+      cb(res);
+    });
+  },
   deleteOne: function(condition, cb) {
     orm.deleteOne("locations", condition, function(res) {
       cb(res);

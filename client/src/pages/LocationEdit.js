@@ -36,7 +36,7 @@ class LocationEdit extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.location_name) {
-      API.editLocation(this.state.id, {
+      API.editLocation2(this.state.id, {
         location_name: this.state.new_location_name
       })
         .then(res => this.loadLocations())

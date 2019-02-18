@@ -57,6 +57,26 @@ router.get("/api/locations/:id", function (req, res) {
   });
 });
 
+//edit location2
+//(this differs from edit a location(1) in that the paramatrs are given in two arrays instead of a single object)
+router.put("/api/locations2/:id", function (req, res) {
+  // console.log("in the controller method for editing a location with the id of: " + req.params.id);
+  var condition = "id = " + req.params.id;
+  // console.log("condition", condition);
+  location.updateOne2(
+    ["location_name"],
+    [req.body.location_name],
+    condition,
+    function (result) {
+      if (result.affectedRows != 2 && result.affectedRows != 1) {
+        // If one or two rows were not affected on an 'insert with duplicate id' statement, then the ID must not exist, so 404
+        return res.status(404).end();
+      }
+      res.status(200).end();
+    }
+  );
+});
+
 //edit a location
 router.put("/api/locations/:id", function (req, res) {
   // console.log("in the controller method for editing a location with the id of: " + req.params.id);

@@ -22,6 +22,11 @@ export default {
     // console.log("The api method editLocation just got called. The id param is: " + id + " and the locationData param is: " + locationData.location_name);
     return axios.put("/api/locations/" + id, locationData);
   },
+  // Edits a location in the database
+  editLocation2: function (id, locationData) {
+    // console.log("The api method editLocation just got called. The id param is: " + id + " and the locationData param is: " + locationData.location_name);
+    return axios.put("/api/locations2/" + id, locationData);
+  },
 
   // Gets all activities
   getActivities: function () {
