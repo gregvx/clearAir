@@ -24,5 +24,4 @@ This was built and designed as a final project for a coding bootcamp at the Univ
 * Must have folder structure that meets MVC Paradigm.
 * Must meet good quality coding standards (indentation, scoping, naming).
 
-The app is deployed to Heroku, and can be viewed 
-[here](https://clearair.herokuapp.com)
+The app was deployed to Heroku but I've let the account expire since then, so the app is no longer running.
